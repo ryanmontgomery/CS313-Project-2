@@ -16,7 +16,7 @@ if (app.get('env') === 'production') {
 }
 
 // Connect to local DB
-if (app.get('env') === 'development') {
+else if (app.get('env') === 'development') {
     mongoose.connect(config.get('db'))
         .then(() => console.log('Connected to MongoDB...'))
         .catch(err => console.error('Could not connect to MongoDB...', err));
