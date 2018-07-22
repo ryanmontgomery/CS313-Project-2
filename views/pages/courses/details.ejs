@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <% include ../../partials/head %>
+    </head>
+
+    <body>
+        <header>
+            <% include ../../partials/header %>
+        </header>
+
+        <main>
+            <h2>Course Details</h2>
+            <table>
+                <tr>
+                    <th>Course Details</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Course Title</td>
+                    <td><%= course.courseTitle %></td>
+                </tr>
+                <tr>
+                    <td>Course Name</td>
+                    <td><%= course.courseName %></td>
+                </tr>
+                <tr>
+                    <td>Teacher</td>
+                    <td><%= course.teacher %></td>
+                </tr>
+                <tr>
+                    <td>Credits</td>
+                    <td><%= course.credits %></td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td><%= course.description %></td>
+                </tr>
+                <tr>
+                    <td>Number of Students</td>
+                    <td><%= course.studentCount %></td>
+                </tr>
+            </table><br>
+
+            <a href="/courses/update/<%= ssnSemId %>/<%= course._id %>">Edit Course</a><br>
+            <a href="/courses/confirmDelete/<%= ssnSemId %>/<%= course._id %>">Delete Course</a>
+
+            <h2>Course Schedule</h2>
+            <table>
+                <tr>
+                    <th>Day</th>
+                    <th>Classroom</th>
+                    <th>Start Time</th>
+                    <th>End Time  </th>
+                </tr>
+                <tr>
+                    <td>Monday</td>
+                    <td><%= course.schedule.monday.classroom %></td>
+                    <td><%= course.schedule.monday.startTime %></td>
+                    <td><%= course.schedule.monday.endTime %></td>
+                </tr>
+                <tr>
+                    <td>Tuesday</td>
+                    <td><%= course.schedule.tuesday.classroom %></td>
+                    <td><%= course.schedule.tuesday.startTime %></td>
+                    <td><%= course.schedule.tuesday.endTime %></td>
+                </tr>
+                <tr>
+                    <td>Wednesday</td>
+                    <td><%= course.schedule.wednesday.classroom %></td>
+                    <td><%= course.schedule.wednesday.startTime %></td>
+                    <td><%= course.schedule.wednesday.endTime %></td>
+                </tr>
+                <tr>
+                    <td>Thursday</td>
+                    <td><%= course.schedule.thursday.classroom %></td>
+                    <td><%= course.schedule.thursday.startTime %></td>
+                    <td><%= course.schedule.thursday.endTime %></td>
+                </tr>
+                <tr>
+                    <td>Friday</td>
+                    <td><%= course.schedule.friday.classroom %></td>
+                    <td><%= course.schedule.friday.startTime %></td>
+                    <td><%= course.schedule.friday.endTime %></td>
+                </tr>
+            </table><br>
+
+            <a href="/schedule/update/<%= ssnSemId %>/<%= course._id %>">Edit Schedule</a><br>
+            <a href="/schedule/delete/<%= ssnSemId %>/<%= course._id %>">Delete Schedule</a>
+        </main>
+
+        <footer>
+            <% include ../../partials/footer %>
+        </footer>
+    </body>
+</html>

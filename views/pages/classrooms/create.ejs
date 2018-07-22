@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <% include ../../partials/head %>
+    </head>
+
+    <body>
+        <header>
+            <% include ../../partials/altheader %>
+        </header>
+
+        <main>
+            <h2>New Classroom</h2>
+            <div class="formArea">
+                <form method="POST" action="/classrooms">
+                    <label for="roomNumber">Room Number</label>
+                    <input type="number" id="roomNumber" name="roomNumber" min="1" max="999" placeholder="101" required>
+                  
+                    <label for="maxOccupancy">Max Occupancy</label>
+                    <input type="number" id="maxOccupancy" name="maxOccupancy" min="30" max="75" placeholder="50" required>
+              
+                    <label for="notes">Notes</label>
+                    <input type="text" id="notes" name="notes" placeholder="This classroom has accommodations for cauldrons." required>
+
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <% include ../../partials/footer %>
+        </footer>
+    </body>
+</html>

@@ -2,9 +2,29 @@ const config = require('config');
 const mongoose = require('mongoose');
 const Joi = require('joi');
 const express = require('express');
-
+const methodOverride = require('method-override');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const home = require('./routes/home');
+const semesters = require('./routes/semesters');
+const courses = require('./routes/courses');
+const schedule = require('./routes/schedule');
+const classrooms = require('./routes/classrooms');
 const app = express();
-app.use(express.json());
+
+app.set('view engine', 'ejs');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
+app.use(session({secret: 'XASDASDA', saveUninitialized: false, resave: false}));
+app.use(express.static(__dirname + '/public'));
+app.use('/', home);
+app.use('/semesters', semesters);
+app.use('/courses', courses);
+app.use('/schedule', schedule);
+app.use('/classrooms', classrooms);
+
 
 console.log(`app: ${app.get('env')}`);
 
@@ -21,51 +41,6 @@ else if (app.get('env') === 'development') {
         .then(() => console.log('Connected to MongoDB...'))
         .catch(err => console.error('Could not connect to MongoDB...', err));
 }
-
-// Home Page
-app.get('/', (req, res) => {
-    res.send('Home Page');
-});
-
-// List all courses (associated with building)
-app.get('/courses', (req, res) => {
-    res.send('Courses Page');
-});
-
-// Read course details
-app.get('/courses/:id', (req, res) => {
-    res.send(req.params.id + ' Specific Course');
-});
-
-// List all classrooms
-app.get('/classrooms', (req, res) => {
-    res.send('Classrooms Page');
-});
-
-// Create classroom
-app.post('/classrooms', (req, res) => {
-    const classroom = {
-        roomNumber: req.body.roomNumber,
-        maxOccupancy: req.body.maxOccupancy,
-        notes: req.body.notes
-    };
-    res.send(classroom);
-});
-
-// Read classroom
-app.get('/classrooms/:id', (req, res) => {
-    res.send(req.params.id + ' Specific Classroom');
-});
-
-// Update Classroom
-app.put('/classroom/:id', (req, res) => {
-
-});
-
-// Delete Classroom
-app.delete('/classrooms/:id', (req, res) => {
-
-});
 
 // Create classroom event
 app.post('/classroomSchedule', (req, res) => {
@@ -86,6 +61,7 @@ app.put('/classroomSchedule/:id', (req, res) => {
 app.delete('classroomSchedule/:id', (req, res) => {
 
 });
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

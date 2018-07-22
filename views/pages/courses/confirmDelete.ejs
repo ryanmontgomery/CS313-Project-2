@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <% include ../../partials/head %>
+    </head>
+
+    <body>
+        <header>
+            <% include ../../partials/header %>
+        </header>
+
+        <main>
+            <h2>Course Details</h2>
+            <table>
+                <tr>
+                    <th>Course Details</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Course Title</td>
+                    <td><%= course.courseTitle %></td>
+                </tr>
+                <tr>
+                    <td>Course Name</td>
+                    <td><%= course.courseName %></td>
+                </tr>
+                <tr>
+                    <td>Teacher</td>
+                    <td><%= course.teacher %></td>
+                </tr>
+                <tr>
+                    <td>Credits</td>
+                    <td><%= course.credits %></td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td><%= course.description %></td>
+                </tr>
+                <tr>
+                    <td>Number of Students</td>
+                    <td><%= course.studentCount %></td>
+                </tr>
+            </table>
+            <h3>Delete</h3>
+            <form method="POST" action="/courses/<%= ssnSemId %>/<%= course._id %>?_method=DELETE">
+                <input type="submit" value="Yes">
+            </form>
+            <a href="/courses/<%= ssnSemId %>/<%= course._id %>"><input type="submit" value="No"></a>
+        </main>
+
+        <footer>
+            <% include ../../partials/footer %>
+        </footer>
+    </body>
+</html>

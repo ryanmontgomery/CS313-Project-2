@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <% include ../../partials/head %>
+    </head>
+
+    <body>
+        <header>
+            <% include ../../partials/header %>
+        </header>
+
+        <main>
+            <h2>Courses</h2>
+            <a href="/courses/create">Create Course</a><br><br>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Name</th>
+                    <th>Credits</th>
+                    <th>Student Count</th>
+                    <th>Scheduled</th>
+                </tr>
+                <% for(var i=0; i < courses.length; i++) { %>
+                <tr>
+                    <td><a href="/courses/<%= ssnSemId %>/<%= courses[i]._id %>"><%= courses[i].courseTitle %></td></a>
+                    <td><%= courses[i].courseName %></td>
+                    <td><%= courses[i].credits %></td>
+                    <td><%= courses[i].studentCount %></td>
+                <% var scheduled = "";
+                if(courses[i].schedule.monday.isScheduled ||
+                   courses[i].schedule.tuesday.isScheduled ||
+                   courses[i].schedule.wednesday.isScheduled ||
+                   courses[i].schedule.thursday.isScheduled ||
+                   courses[i].schedule.friday.isScheduled) scheduled = "True";
+                else scheduled = "False"; %>
+                    <td><%= scheduled %></td>
+                </tr>
+                <% } %>
+            </table>
+        </main>
+
+        <footer>
+            <% include ../../partials/footer %>
+        </footer>
+    </body>
+</html>

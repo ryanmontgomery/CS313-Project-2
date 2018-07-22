@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <% include ../../partials/head %>
+    </head>
+
+    <body>
+        <header>
+            <% include ../../partials/header %>
+        </header>
+
+        <main>
+            <h2>Update Schedule</h2>
+            <h3><%= course.courseTitle %></h3>
+            
+            <div class="formArea">
+                <h4>Consistent Schedule</h4>
+                <form method="POST" action="/schedule/<%= ssnSemId %>/<%= course._id %>?_method=PUT">
+                    <input type="hidden" name="scheduleType" value="consistent">
+                    <label for="monday">Monday</label> 
+                    <input id="monday" type="checkbox" name="mondayScheduled" value="monday">
+                    <label for="tuesday">Tuesday</label> 
+                    <input id="tuesday" type="checkbox" name="tuesdayScheduled" value="tuesday">
+                    <label for="wednesday">Wednesday</label> 
+                    <input id="wednesday" type="checkbox" name="wednesdayScheduled" value="wednesday">
+                    <label for="thursday">Thursday</label> 
+                    <input id="thursday" type="checkbox" name="thursdayScheduled" value="thursday">
+                    <label for="friday">Friday</label> 
+                    <input id="friday" type="checkbox" name="fridayScheduled" value="friday"><br><br>
+
+                    <label for="selectClassroom">Classrooms</label>
+                    <select id="selectClassroom" name="roomNumber">
+                    <% for(var i=0; i < classrooms.length; i++) { %>
+                        <option value="<%= classrooms[i].roomNumber %>"><%= classrooms[i].roomNumber %></option>
+                    <% } %>
+                    </select>
+
+                    <label for="startTime">Start Time</label>
+                    <input id="startTime" type="time" name="startTime" required>
+
+                    <label for="endTime">End Time</label>
+                    <input id="endTime" type="time" name="endTime" required><br><br>
+                
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+
+            <br><hr><br>
+
+            <div class="formArea">
+                    <h4>Varied Schedule</h4>
+                    <form method="POST" action="/schedule/<%= ssnSemId %>/<%= course._id %>?_method=PUT">
+                        <input type="hidden" name="scheduleType" value="varied">
+                        <label for="variedMonday">Monday</label> 
+                        <input id="variedMonday" type="checkbox" name="mondayScheduled" value="monday"><br><br>
+                        <label for="mondaySelectClassroom">Classrooms</label>
+                        <select id="mondaySelectClassroom" name="mondayRoomNumber">
+                        <% for(var i=0; i < classrooms.length; i++) { %>
+                            <option value="<%= classrooms[i].roomNumber %>"><%= classrooms[i].roomNumber %></option>
+                        <% } %>
+                        </select>
+                        <label for="mondayStartTime">Start Time</label>
+                        <input id="mondayStartTime" type="time" name="mondayStartTime">
+                        <label for="mondayEndTime">End Time</label>
+                        <input id="mondayEndTime" type="time" name="mondayEndTime"><br><br>
+
+                        <label for="variedTuesday">Tuesday</label> 
+                        <input id="variedTuesday" type="checkbox" name="tuesdayScheduled" value="tuesday"><br><br>
+                        <label for="tuesdaySelectClassroom">Classrooms</label>
+                        <select id="tuesdaySelectClassroom" name="tuesdayRoomNumber">
+                        <% for(var i=0; i < classrooms.length; i++) { %>
+                            <option value="<%= classrooms[i].roomNumber %>"><%= classrooms[i].roomNumber %></option>
+                        <% } %>
+                        </select>
+                        <label for="tuesdayStartTime">Start Time</label>
+                        <input id="tuesdayStartTime" type="time" name="tuesdayStartTime">
+                        <label for="tuesdayEndTime">End Time</label>
+                        <input id="tuesdayEndTime" type="time" name="tuesdayEndTime"><br><br>
+
+                        <label for="variedWednesday">Wednesday</label> 
+                        <input id="variedWednesday" type="checkbox" name="wednesdayScheduled" value="wednesday"><br><br>
+                        <label for="wednesdaySelectClassroom">Classrooms</label>
+                        <select id="wednesdaySelectClassroom" name="wednesdayRoomNumber">
+                        <% for(var i=0; i < classrooms.length; i++) { %>
+                            <option value="<%= classrooms[i].roomNumber %>"><%= classrooms[i].roomNumber %></option>
+                        <% } %>
+                        </select>
+                        <label for="wednesdayStartTime">Start Time</label>
+                        <input id="wednesdayStartTime" type="time" name="wednesdayStartTime">
+                        <label for="wednesdayEndTime">End Time</label>
+                        <input id="wednesdayEndTime" type="time" name="wednesdayEndTime"><br><br>
+
+                        <label for="variedThursday">Thursday</label> 
+                        <input id="variedThursday" type="checkbox" name="thursdayScheduled" value="thursday"><br><br>
+                        <label for="thursdaySelectClassroom">Classrooms</label>
+                        <select id="thursdaySelectClassroom" name="thursdayRoomNumber">
+                        <% for(var i=0; i < classrooms.length; i++) { %>
+                            <option value="<%= classrooms[i].roomNumber %>"><%= classrooms[i].roomNumber %></option>
+                        <% } %>
+                        </select>
+                        <label for="thursdayStartTime">Start Time</label>
+                        <input id="thursdayStartTime" type="time" name="thursdayStartTime">
+                        <label for="thursdayEndTime">End Time</label>
+                        <input id="thursdayEndTime" type="time" name="thursdayEndTime"><br><br>
+
+                        <label for="variedFriday">Friday</label> 
+                        <input id="variedFriday" type="checkbox" name="fridayScheduled" value="friday"><br><br>
+                        <label for="fridaySelectClassroom">Classrooms</label>
+                        <select id="fridaySelectClassroom" name="fridayRoomNumber">
+                        <% for(var i=0; i < classrooms.length; i++) { %>
+                            <option value="<%= classrooms[i].roomNumber %>"><%= classrooms[i].roomNumber %></option>
+                        <% } %>
+                        </select>
+                        <label for="fridayStartTime">Start Time</label>
+                        <input id="fridayStartTime" type="time" name="fridayStartTime">
+                        <label for="fridayEndTime">End Time</label>
+                        <input id="fridayEndTime" type="time" name="fridayEndTime"><br><br>
+                    
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+        </main>
+
+        <footer>
+            <% include ../../partials/footer %>
+        </footer>
+    </body>
+</html>

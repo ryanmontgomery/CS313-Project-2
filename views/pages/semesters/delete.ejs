@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <% include ../../partials/head %>
+    </head>
+
+    <body>
+        <header>
+            <% include ../../partials/header %>
+        </header>
+
+        <main>
+            <h2>Semester Details</h2>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+                <tr>
+                    <td><%= semester.semesterName %></td>
+                    <td><%= dateFormat(semester.startDate, "UTC:m/d/yy")  %></td>
+                    <td><%= dateFormat(semester.endDate, "UTC:m/d/yy") %></td>
+                </tr>
+            </table>
+            <br>
+            <h3>Delete</h3>
+            <form method="POST" action="/semesters/<%= semester._id %>?_method=DELETE">
+                <input type="submit" value="Yes">
+            </form>
+            <a href="/semesters/<%= semester._id %>"><input type="submit" value="No"></a>
+        </main>
+
+        <footer>
+            <% include ../../partials/footer %>
+        </footer>
+    </body>
+</html>
