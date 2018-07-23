@@ -2,24 +2,44 @@ const {Semester, validateSemester, addSem, readSem, updateSem, deleteSem} = requ
 const express = require('express');
 const router = express.Router();
 const dateFormat = require('dateformat');
+const mongoose = require('mongoose');
+var error = "";
 
 router.get('/', async (req, res) => {
         const semesters = await Semester.find().sort('-startDate');
-        res.render('pages/semesters/index', { ssnSemName: req.session.semName, semesters: semesters, dateFormat: dateFormat});
+        res.render('pages/semesters/index', { ssnSemName: req.session.semName, semesters: semesters, dateFormat: dateFormat, error: error });
+        error = "";
 });
 
 router.get('/create', (req, res) => {
-    res.render('pages/semesters/create', { ssnSemName: req.session.semName });
+        res.render('pages/semesters/create', { ssnSemName: req.session.semName });
 });
 
 router.get('/update/:id', async (req, res) => {
-        const semester = await readSem(req.params.id);
-        res.render('pages/semesters/update', { ssnSemName: req.session.semName, semester: semester });
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+                error = "Invalid semester.";
+                const semesters = await Semester.find().sort('-startDate');
+                res.render('pages/semesters/index', { ssnSemName: req.session.semName, semesters: semesters, dateFormat: dateFormat, error: error });
+                error = "";
+        }
+        else {
+                const semester = await readSem(req.params.id);
+                res.render('pages/semesters/update', { ssnSemName: req.session.semName, semester: semester });
+        }
+        
 });
 
 router.get('/delete/:id', async (req, res) => {
-        const semester = await readSem(req.params.id);
-        res.render('pages/semesters/delete', { ssnSemName: req.session.semName, semester: semester, dateFormat: dateFormat});
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+                error = "Invalid semester.";
+                const semesters = await Semester.find().sort('-startDate');
+                res.render('pages/semesters/index', { ssnSemName: req.session.semName, semesters: semesters, dateFormat: dateFormat, error: error });
+                error = "";
+        }
+        else {
+                const semester = await readSem(req.params.id);
+                res.render('pages/semesters/delete', { ssnSemName: req.session.semName, semester: semester, dateFormat: dateFormat});
+        }
 });
 
 router.post('/', async (req, res) => {
@@ -31,8 +51,17 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-        const semester = await readSem(req.params.id);
-        res.render('pages/semesters/details', { dateFormat: dateFormat, ssnSemName: req.session.semName, semester: semester });
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+                error = "Invalid semester.";
+                const semesters = await Semester.find().sort('-startDate');
+                res.render('pages/semesters/index', { ssnSemName: req.session.semName, semesters: semesters, dateFormat: dateFormat, error: error });
+                error = "";
+        }
+        else {
+                const semester = await readSem(req.params.id);
+                res.render('pages/semesters/details', { dateFormat: dateFormat, ssnSemName: req.session.semName, semester: semester });
+        }
+        
 });
 
 router.put('/:id', async (req, res) => {

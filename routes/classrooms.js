@@ -1,10 +1,12 @@
 const { Classroom, validateClassroom, addClassroom, readClassroom, updateClassroom, deleteClassroom } = require('../models/classroom');
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
+var error = "";
 
 router.get('/', async (req, res) => {
     const classrooms = await Classroom.find().sort('roomNumber');
-    res.render('pages/classrooms/index', { classrooms: classrooms });
+    res.render('pages/classrooms/index', { classrooms: classrooms, error: error });
 });
 
 router.get('/create', (req, res) => {
@@ -12,18 +14,42 @@ router.get('/create', (req, res) => {
 });
 
 router.get('/update/:id', async (req, res) => {
-    const classroom = await readClassroom(req.params.id);
-    res.render('pages/classrooms/update', { classroom: classroom });
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        error = "Invalid classroom.";
+        const classrooms = await Classroom.find().sort('roomNumber');
+        res.render('pages/classrooms/index', { classrooms: classrooms, error: error });
+        error = "";
+    }
+    else {
+        const classroom = await readClassroom(req.params.id);
+        res.render('pages/classrooms/update', { classroom: classroom });
+    }
 });
 
 router.get('/delete/:id', async (req, res) => {
-    const classroom = await readClassroom(req.params.id);
-    res.render('pages/classrooms/delete', {classroom: classroom });
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        error = "Invalid classroom.";
+        const classrooms = await Classroom.find().sort('roomNumber');
+        res.render('pages/classrooms/index', { classrooms: classrooms, error: error });
+        error = "";
+    }
+    else {
+        const classroom = await readClassroom(req.params.id);
+        res.render('pages/classrooms/delete', {classroom: classroom });
+    }
 });
 
 router.get('/:id', async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        error = "Invalid classroom.";
+        const classrooms = await Classroom.find().sort('roomNumber');
+        res.render('pages/classrooms/index', { classrooms: classrooms, error: error });
+        error = "";
+    }
+    else {
     const classroom = await readClassroom(req.params.id);
     res.render('pages/classrooms/details', { classroom: classroom });
+    }
 });
 
 router.post('/', async (req, res) => {

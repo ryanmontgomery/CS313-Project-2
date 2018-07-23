@@ -4,14 +4,31 @@ const { buildDay, Schedule, validateDay, validateSchedule, createSchedule, updat
 const { readCourse } = require('../models/courses');
 const express = require('express');
 const router = express.Router();
-const dateFormat = require('dateformat');
+const mongoose = require('mongoose');
+var error = "";
 
-router.get('/:semesterId/:room', async (req, res) => {
-    //TODO GET A ROOMS SCHEDULE
-});
 
 router.get('/update/:semesterId/:courseId', async (req, res) => {
-    if(!req.session.semId) res.redirect('/');
+    if(!req.session.semId) {
+        error = "You must choose a semester in order to edit a course schedule.";
+        const semesters = await Semester.find().sort('-startDate').select({ _id: 1, semesterName: 1 });
+        res.render('pages/index', { semesters: semesters, ssnSemName: req.session.semName, error: error });
+        error = "";
+    }
+    else if (!mongoose.Types.ObjectId.isValid(req.params.semesterId)) {
+        error = "Invalid semester.";
+        const semester = await Semester.findById(req.session.semId);
+        const courses = semester.courses;
+        res.render('pages/courses/index', { courses: courses, ssnSemName: req.session.semName, ssnSemId: req.session.semId , error: error });
+        error = "";
+    }
+    else if (!mongoose.Types.ObjectId.isValid(req.params.courseId)) {
+        error = "Invalid course.";
+        const semester = await Semester.findById(req.session.semId);
+        const courses = semester.courses;
+        res.render('pages/courses/index', { courses: courses, ssnSemName: req.session.semName, ssnSemId: req.session.semId , error: error });
+        error = "";
+    }
     else {
         const classrooms = await Classroom.find().sort('-roomNumber').select({ roomNumber: 1 });
         const course = await readCourse(req.params.semesterId, req.params.courseId);

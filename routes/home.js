@@ -1,10 +1,11 @@
 const { Semester } = require('../models/semesters');
 const express = require('express');
 const router = express.Router();
+var error = "";
 
 router.get('/', async (req, res) => {
     const semesters = await Semester.find().sort('-startDate').select({ _id: 1, semesterName: 1 });
-    res.render('pages/index', { semesters: semesters, ssnSemName: req.session.semName });
+    res.render('pages/index', { semesters: semesters, ssnSemName: req.session.semName, error: error });
 });
 
 router.post('/', async (req, res) => {

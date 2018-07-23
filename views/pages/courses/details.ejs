@@ -44,7 +44,7 @@
             </table><br>
 
             <a href="/courses/update/<%= ssnSemId %>/<%= course._id %>">Edit Course</a><br>
-            <a href="/courses/confirmDelete/<%= ssnSemId %>/<%= course._id %>">Delete Course</a>
+            <a href="/courses/delete/<%= ssnSemId %>/<%= course._id %>">Delete Course</a>
 
             <h2>Course Schedule</h2>
             <table>
@@ -54,40 +54,54 @@
                     <th>Start Time</th>
                     <th>End Time  </th>
                 </tr>
+
+                <% if(course.schedule.monday.isScheduled) { %>
                 <tr>
                     <td>Monday</td>
                     <td><%= course.schedule.monday.classroom %></td>
-                    <td><%= course.schedule.monday.startTime %></td>
-                    <td><%= course.schedule.monday.endTime %></td>
+                    <td><%= dateFormat(course.schedule.monday.startTime, "UTC:h:MM TT") %></td>
+                    <td><%= dateFormat(course.schedule.monday.endTime, "UTC:h:MM TT") %></td>
                 </tr>
+                <% } %>
+                
+                <% if(course.schedule.tuesday.isScheduled) { %>
                 <tr>
                     <td>Tuesday</td>
                     <td><%= course.schedule.tuesday.classroom %></td>
-                    <td><%= course.schedule.tuesday.startTime %></td>
-                    <td><%= course.schedule.tuesday.endTime %></td>
+                    <td><%= dateFormat(course.schedule.tuesday.startTime, "UTC:h:MM TT") %></td>
+                    <td><%= dateFormat(course.schedule.tuesday.endTime, "UTC:h:MM TT") %></td>
                 </tr>
+                <% } %>
+
+                <% if(course.schedule.wednesday.isScheduled) { %>
                 <tr>
                     <td>Wednesday</td>
                     <td><%= course.schedule.wednesday.classroom %></td>
-                    <td><%= course.schedule.wednesday.startTime %></td>
-                    <td><%= course.schedule.wednesday.endTime %></td>
+                    <td><%= dateFormat(course.schedule.wednesday.startTime, "UTC:h:MM TT") %></td>
+                    <td><%= dateFormat(course.schedule.wednesday.endTime, "UTC:h:MM TT") %></td>
                 </tr>
+                <% } %>
+                
+                <% if(course.schedule.thursday.isScheduled) { %>
                 <tr>
                     <td>Thursday</td>
                     <td><%= course.schedule.thursday.classroom %></td>
-                    <td><%= course.schedule.thursday.startTime %></td>
-                    <td><%= course.schedule.thursday.endTime %></td>
+                    <td><%= dateFormat(course.schedule.thursday.startTime, "UTC:h:MM TT") %></td>
+                    <td><%= dateFormat(course.schedule.thursday.endTime, "UTC:h:MM TT") %></td>
                 </tr>
+                <% } %>
+                
+                <% if(course.schedule.friday.isScheduled) { %>
                 <tr>
                     <td>Friday</td>
                     <td><%= course.schedule.friday.classroom %></td>
-                    <td><%= course.schedule.friday.startTime %></td>
-                    <td><%= course.schedule.friday.endTime %></td>
+                    <td><%= dateFormat(course.schedule.friday.startTime, "UTC:h:MM TT") %></td>
+                    <td><%= dateFormat(course.schedule.friday.endTime, "UTC:h:MM TT") %></td>
                 </tr>
+                <% } %>
             </table><br>
 
             <a href="/schedule/update/<%= ssnSemId %>/<%= course._id %>">Edit Schedule</a><br>
-            <a href="/schedule/delete/<%= ssnSemId %>/<%= course._id %>">Delete Schedule</a>
         </main>
 
         <footer>
